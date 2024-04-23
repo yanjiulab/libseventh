@@ -1,6 +1,6 @@
 # SEVENTH
 
-SEVENTH (Simple EVENT Here) is a minimalist C99 event loop library with no external dependencies, consisting only of one source file and one header file. You can directly integrate these two files into your source code.
+SEVENTH (Simple EVENT Here) is a concise C99 event loop library with no external dependencies, consisting only of one source file and one header file. You can directly integrate these two files into your source code.
 
 > Highly referenced `libhv` project.
 
