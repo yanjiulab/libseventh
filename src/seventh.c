@@ -1,5 +1,7 @@
 #include "seventh.h"
 
+#include <time.h>
+
 // -----------------------------------------------------------------------------
 // Utils
 // -----------------------------------------------------------------------------
@@ -89,15 +91,15 @@ time_t cron_next_timeout(int minute, int hour, int day, int week, int month) {
 }
 
 unsigned long long gethrtime_us() {
-#ifdef HAVE_CLOCK_GETTIME
+// #ifdef HAVE_CLOCK_GETTIME
     struct timespec ts;
     clock_gettime(CLOCK_MONOTONIC, &ts);
     return ts.tv_sec * (unsigned long long)1000000 + ts.tv_nsec / 1000;
-#else
-    struct timeval tv;
-    gettimeofday(&tv, NULL);
-    return tv.tv_sec * (unsigned long long)1000000 + tv.tv_usec;
-#endif
+// #else
+//     struct timeval tv;
+//     gettimeofday(&tv, NULL);
+//     return tv.tv_sec * (unsigned long long)1000000 + tv.tv_usec;
+// #endif
 }
 // -----------------------------------------------------------------------------
 // Simple heap implementation.

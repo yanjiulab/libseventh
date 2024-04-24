@@ -14,7 +14,7 @@
 #include <sys/select.h>
 #include <sys/socket.h>
 #include <sys/time.h>
-#include <time.h>
+
 #include <unistd.h> // usleep
 
 // -----------------------------------------------------------------------------
@@ -936,55 +936,55 @@ struct evio {
     struct sockaddr* peeraddr;
     uint64_t last_read_hrtime;
     uint64_t last_write_hrtime;
-    //     // read
-    // fifo_buf_t readbuf;
-    //     unsigned int read_flags;
-    //     // for eio_read_until
-    //     union {
-    //         unsigned int read_until_length;
-    //         unsigned char read_until_delim;
-    //     };
-    //     uint32_t max_read_bufsize;
-    //     uint32_t small_readbytes_cnt; // for readbuf autosize
-    //     // write
-    //     struct write_queue write_queue;
-    //     pthread_mutex_t write_mutex; // lock write and write_queue
-    //     uint32_t write_bufsize;
-    //     uint32_t max_write_bufsize;
-    //     // callbacks
-    // read_cb read_cb;
-    // write_cb write_cb;
-    // close_cb close_cb;
-    // accept_cb accept_cb;
-    // connect_cb connect_cb;
-    //     // timers
-    //     int connect_timeout;    // ms
-    //     int close_timeout;      // ms
-    //     int read_timeout;       // ms
-    //     int write_timeout;      // ms
-    //     int keepalive_timeout;  // ms
-    //     int heartbeat_interval; // ms
-    //     eio_send_heartbeat_fn heartbeat_fn;
-    //     etimer_t* connect_timer;
-    //     etimer_t* close_timer;
-    //     etimer_t* read_timer;
-    //     etimer_t* write_timer;
-    //     etimer_t* keepalive_timer;
-    //     etimer_t* heartbeat_timer;
-    //     // upstream
-    //     struct eio_s* upstream_io; // for eio_setup_upstream
-    //     // unpack
-    //     unpack_setting_t* unpack_setting; // for eio_set_unpack
-    //     // ssl
-    //     void* ssl;      // for eio_set_ssl
-    //     void* ssl_ctx;  // for eio_set_ssl_ctx
-    //     char* hostname; // for hssl_set_sni_hostname
-    //     // context
-    //     void* ctx; // for eio_context / eio_set_context
-    // private:
-    #if defined(EVENT_POLL) || defined(EVENT_KQUEUE)
-        int event_index[2]; // for poll,kqueue
-    #endif
+//     // read
+// fifo_buf_t readbuf;
+//     unsigned int read_flags;
+//     // for eio_read_until
+//     union {
+//         unsigned int read_until_length;
+//         unsigned char read_until_delim;
+//     };
+//     uint32_t max_read_bufsize;
+//     uint32_t small_readbytes_cnt; // for readbuf autosize
+//     // write
+//     struct write_queue write_queue;
+//     pthread_mutex_t write_mutex; // lock write and write_queue
+//     uint32_t write_bufsize;
+//     uint32_t max_write_bufsize;
+//     // callbacks
+// read_cb read_cb;
+// write_cb write_cb;
+// close_cb close_cb;
+// accept_cb accept_cb;
+// connect_cb connect_cb;
+//     // timers
+//     int connect_timeout;    // ms
+//     int close_timeout;      // ms
+//     int read_timeout;       // ms
+//     int write_timeout;      // ms
+//     int keepalive_timeout;  // ms
+//     int heartbeat_interval; // ms
+//     eio_send_heartbeat_fn heartbeat_fn;
+//     etimer_t* connect_timer;
+//     etimer_t* close_timer;
+//     etimer_t* read_timer;
+//     etimer_t* write_timer;
+//     etimer_t* keepalive_timer;
+//     etimer_t* heartbeat_timer;
+//     // upstream
+//     struct eio_s* upstream_io; // for eio_setup_upstream
+//     // unpack
+//     unpack_setting_t* unpack_setting; // for eio_set_unpack
+//     // ssl
+//     void* ssl;      // for eio_set_ssl
+//     void* ssl_ctx;  // for eio_set_ssl_ctx
+//     char* hostname; // for hssl_set_sni_hostname
+//     // context
+//     void* ctx; // for eio_context / eio_set_context
+// private:
+#if defined(EVENT_POLL) || defined(EVENT_KQUEUE)
+    int event_index[2]; // for poll,kqueue
+#endif
 };
 
 // evloop
