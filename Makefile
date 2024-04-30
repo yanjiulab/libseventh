@@ -8,11 +8,12 @@ EXAMPLES = $(notdir $(patsubst %.c, %, $(EXAMPLE_SRCS)))
 EV_H = ./src/seventh.h
 EV_C = ./src/seventh.c
 
-CFLAGS = -g3 -O2 -Wno-sign-compare  -I./src -DEVENT_EPOLL
+CFLAGS = -g3 -O2 -I./src -DEVENT_EPOLL
 
 .PHONY: all
 
 all:
+	@mkdir -p ${LIB_DIR}
 	$(CC) -c ${EV_C} -o ${LIB_DIR}/seventh.o
 	ar rc ${LIB_DIR}/libseventh.a ${LIB_DIR}/seventh.o
 	$(CC) $(CPPFLAGS) $(CFLAGS) ${EV_C} -fPIC -shared -o $(LIB_DIR)/libseventh.so
@@ -28,6 +29,7 @@ uninstall:
 	@rm -v /usr/local/include/seventh.h
 
 example:
+	@mkdir -p ${BIN_DIR}
 	@echo $(EXAMPLES)
 	@for target in $(EXAMPLES); \
 	do					\

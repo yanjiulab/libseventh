@@ -91,15 +91,15 @@ time_t cron_next_timeout(int minute, int hour, int day, int week, int month) {
 }
 
 unsigned long long gethrtime_us() {
-// #ifdef HAVE_CLOCK_GETTIME
+    // #ifdef HAVE_CLOCK_GETTIME
     struct timespec ts;
     clock_gettime(CLOCK_MONOTONIC, &ts);
     return ts.tv_sec * (unsigned long long)1000000 + ts.tv_nsec / 1000;
-// #else
-//     struct timeval tv;
-//     gettimeofday(&tv, NULL);
-//     return tv.tv_sec * (unsigned long long)1000000 + tv.tv_usec;
-// #endif
+    // #else
+    //     struct timeval tv;
+    //     gettimeofday(&tv, NULL);
+    //     return tv.tv_sec * (unsigned long long)1000000 + tv.tv_usec;
+    // #endif
 }
 // -----------------------------------------------------------------------------
 // Simple heap implementation.
@@ -946,59 +946,59 @@ void evio_ready(evio_t* io) {
     //     io->recv = io->send = 0;
     //     io->recvfrom = io->sendto = 0;
     //     io->close = 0;
-    //     // public:
-    //     io->id = evio_next_id();
-    //     io->io_type = evio_tYPE_UNKNOWN;
-    //     io->error = 0;
-    //     io->events = io->revents = 0;
-    //     io->last_read_hrtime = io->last_write_hrtime = io->loop->cur_hrtime;
-    //     // readbuf
-    //     io->alloced_readbuf = 0;
-    //     io->readbuf.base = io->loop->readbuf.base;
-    //     io->readbuf.len = io->loop->readbuf.len;
-    //     io->readbuf.head = io->readbuf.tail = 0;
-    //     io->read_flags = 0;
-    //     io->read_until_length = 0;
-    //     io->max_read_bufsize = MAX_READ_BUFSIZE;
-    //     io->small_readbytes_cnt = 0;
-    //     // write_queue
-    //     io->write_bufsize = 0;
-    //     io->max_write_bufsize = MAX_WRITE_BUFSIZE;
-    //     // callbacks
-    //     io->read_cb = NULL;
-    //     io->write_cb = NULL;
-    //     io->close_cb = NULL;
-    //     io->accept_cb = NULL;
-    //     io->connect_cb = NULL;
-    //     // timers
-    //     io->connect_timeout = 0;
-    //     io->connect_timer = NULL;
-    //     io->close_timeout = 0;
-    //     io->close_timer = NULL;
-    //     io->read_timeout = 0;
-    //     io->read_timer = NULL;
-    //     io->write_timeout = 0;
-    //     io->write_timer = NULL;
-    //     io->keepalive_timeout = 0;
-    //     io->keepalive_timer = NULL;
-    //     io->heartbeat_interval = 0;
-    //     io->heartbeat_fn = NULL;
-    //     io->heartbeat_timer = NULL;
-    //     // upstream
-    //     io->upstream_io = NULL;
-    //     // unpack
-    //     io->unpack_setting = NULL;
-    //     // ssl
-    //     io->ssl = NULL;
-    //     io->ssl_ctx = NULL;
-    //     io->alloced_ssl_ctx = 0;
-    //     io->hostname = NULL;
-    //     // context
-    //     io->ctx = NULL;
-    //     // private:
-    // #if defined(EVENT_POLL) || defined(EVENT_KQUEUE)
-    //     io->event_index[0] = io->event_index[1] = -1;
-    // #endif
+    // public:
+    // io->id = evio_next_id();
+    // io->io_type = EVIO_TYPE_UNKNOWN;
+    io->error = 0;
+    io->events = io->revents = 0;
+//     io->last_read_hrtime = io->last_write_hrtime = io->loop->cur_hrtime;
+//     // readbuf
+//     io->alloced_readbuf = 0;
+//     io->readbuf.base = io->loop->readbuf.base;
+//     io->readbuf.len = io->loop->readbuf.len;
+//     io->readbuf.head = io->readbuf.tail = 0;
+//     io->read_flags = 0;
+//     io->read_until_length = 0;
+//     io->max_read_bufsize = MAX_READ_BUFSIZE;
+//     io->small_readbytes_cnt = 0;
+//     // write_queue
+//     io->write_bufsize = 0;
+//     io->max_write_bufsize = MAX_WRITE_BUFSIZE;
+//     // callbacks
+//     io->read_cb = NULL;
+//     io->write_cb = NULL;
+//     io->close_cb = NULL;
+//     io->accept_cb = NULL;
+//     io->connect_cb = NULL;
+//     // timers
+//     io->connect_timeout = 0;
+//     io->connect_timer = NULL;
+//     io->close_timeout = 0;
+//     io->close_timer = NULL;
+//     io->read_timeout = 0;
+//     io->read_timer = NULL;
+//     io->write_timeout = 0;
+//     io->write_timer = NULL;
+//     io->keepalive_timeout = 0;
+//     io->keepalive_timer = NULL;
+//     io->heartbeat_interval = 0;
+//     io->heartbeat_fn = NULL;
+//     io->heartbeat_timer = NULL;
+//     // upstream
+//     io->upstream_io = NULL;
+//     // unpack
+//     io->unpack_setting = NULL;
+//     // ssl
+//     io->ssl = NULL;
+//     io->ssl_ctx = NULL;
+//     io->alloced_ssl_ctx = 0;
+//     io->hostname = NULL;
+//     // context
+//     io->ctx = NULL;
+//     // private:
+#if defined(EVENT_POLL) || defined(EVENT_KQUEUE)
+    io->event_index[0] = io->event_index[1] = -1;
+#endif
     // #ifdef EVENT_IOCP
     //     io->hovlp = NULL;
     // #endif
@@ -1029,10 +1029,32 @@ void evio_ready(evio_t* io) {
 evio_t* evio_read(evloop_t* loop, int fd, evio_cb read_cb) {
     evio_t* io = evio_get(loop, fd);
     assert(io != NULL);
+    // if (buf && len) {
+    //     io->readbuf.base = (char*)buf;
+    //     io->readbuf.len = len;
+    // }
     // if (read_cb) {
     //     io->read_cb = read_cb;
     // }
+    // use __nio_read cb as read_cb
+    // choose read or recvfrom by type
     evio_add(io, read_cb, EV_READ);
+    return io;
+}
+
+evio_t* evio_write(evloop_t* loop, int fd, evio_cb write_cb) {
+    evio_t* io = evio_get(loop, fd);
+    assert(io != NULL);
+    // if (buf && len) {
+    //     io->readbuf.base = (char*)buf;
+    //     io->readbuf.len = len;
+    // }
+    // if (read_cb) {
+    //     io->read_cb = read_cb;
+    // }
+    // use __nio_read cb as read_cb
+    // choose read or recvfrom by type
+    evio_add(io, write_cb, EV_WRITE);
     return io;
 }
 

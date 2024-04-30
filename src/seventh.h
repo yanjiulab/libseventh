@@ -1105,6 +1105,7 @@ int evio_add(evio_t* io, evio_cb cb, int events);
 int evio_del(evio_t* io, int events);
 void evio_ready(evio_t* io);
 evio_t* evio_read(evloop_t* loop, int fd, evio_cb read_cb);
+evio_t* evio_write(evloop_t* loop, int fd, evio_cb write_cb);
 // evio_t* evio_write();
 
 #endif
